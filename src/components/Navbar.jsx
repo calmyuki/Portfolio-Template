@@ -13,6 +13,7 @@ export default function Navbar() {
   const animRef         = useRef(null)
   const expandTimer     = useRef(null)
   const collapseTimer   = useRef(null)
+  const islandRef       = useRef(null)
   const location        = useLocation()
   
   // Set active link based on scroll and current path
@@ -124,11 +125,39 @@ export default function Navbar() {
     }, 200)
   }
 
+  // Tap-to-toggle island on touch / mobile devices
+  const handleIslandClick = () => {
+    if (!expanded) {
+      handleEnter()
+    }
+  }
+
+  // Outside tap/click to collapse on mobile
+  useEffect(() => {
+    const handleOutsideTouch = (e) => {
+      if (islandRef.current && !islandRef.current.contains(e.target)) {
+        handleLeave()
+      }
+    }
+
+    window.addEventListener('touchstart', handleOutsideTouch, { passive: true })
+    window.addEventListener('click', handleOutsideTouch, { passive: true })
+    return () => {
+      window.removeEventListener('touchstart', handleOutsideTouch)
+      window.removeEventListener('click', handleOutsideTouch)
+    }
+  }, [])
+
   const handleScroll = (e, href, index) => {
     e.preventDefault()
     if (typeof index === 'number') {
       setActive(index)
     }
+    // Gracefully collapse on mobile after link selection
+    setTimeout(() => {
+      handleLeave()
+    }, 150)
+
     if (href === '/') {
       window.scrollTo({ top: 0, behavior: 'smooth' })
     } else if (href.startsWith('/#')) {
@@ -149,9 +178,11 @@ export default function Navbar() {
   return (
     <header className={styles.header}>
       <nav
+        ref={islandRef}
         className={`${styles.island} ${expanded ? styles.isOpen : ''}`}
         onMouseEnter={handleEnter}
         onMouseLeave={handleLeave}
+        onClick={handleIslandClick}
       >
         {/* ── Collapsed pill: Pure white pulsing dot & clean label ── */}
         <div className={`${styles.collapsed} ${showContent ? styles.collapsedHidden : ''}`}>

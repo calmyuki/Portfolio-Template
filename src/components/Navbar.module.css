@@ -319,3 +319,61 @@
 .cta:active {
   transform: scale(0.97);
 }
+
+/* ══════════════════════════════════════════════════
+   MOBILE RESPONSIVENESS & TOUCH OPTIMIZATION
+══════════════════════════════════════════════════ */
+@media (max-width: 600px) {
+  .island {
+    top: 12px;
+    width: 136px;
+    height: 36px;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .isOpen {
+    width: min(390px, calc(100vw - 24px));
+    height: 48px;
+  }
+
+  .expanded {
+    gap: 8px;
+    padding: 0 8px 0 6px;
+  }
+
+  .catAvatar {
+    width: 32px;
+    height: 32px;
+  }
+
+  .catLottie {
+    width: 42px;
+    height: 42px;
+  }
+
+  .divider {
+    height: 14px;
+  }
+
+  .links {
+    gap: 2px;
+  }
+
+  .link {
+    padding: 6px 10px;
+    font-size: 0.76rem;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .cta {
+    padding: 6px 12px;
+    font-size: 0.72rem;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .collapsedLabel {
+    font-size: 0.7rem;
+  }
+}

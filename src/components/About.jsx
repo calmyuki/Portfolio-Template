@@ -88,6 +88,8 @@ export default function About() {
             ref={imageFrameRef}
             className="about-image-frame"
             onMouseEnter={handleMouseEnter}
+            onClick={handleMouseEnter}
+            onTouchStart={handleMouseEnter}
           >
             {/* 1. Deep Volumetric Red Wash (steady background light) */}
             <div className="about-custom-red-deep" />
