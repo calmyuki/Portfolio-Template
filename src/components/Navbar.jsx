@@ -24,21 +24,21 @@ export default function Navbar() {
     activeRef.current = active
   }, [active])
 
-  // Direct, smooth viewport tracking with 20% hysteresis buffer (prevents flickering/glitching)
+  // Fast, zero-reflow scroll tracking using compositor-cached scrollY with hysteresis
   const updateSection = useCallback(() => {
-    const aboutEl = document.getElementById('about')
-    if (!aboutEl) return
-
-    const rect = aboutEl.getBoundingClientRect()
-    const winHeight = window.innerHeight || document.documentElement.clientHeight || 800
+    const scrollY = window.scrollY || window.pageYOffset || document.documentElement.scrollTop || 0
+    const heroHeight = window.innerHeight || 800
     const current = activeRef.current
 
-    // Hysteresis deadband:
+    // Distance of About section from viewport top
+    const relativeTop = heroHeight - scrollY
+
+    // 20% Hysteresis deadband:
     // To switch from Home (0) -> About (1): top of About must reach upper 42% of viewport
     // To switch from About (1) -> Home (0): top of About must drop down past 62% of viewport
-    if (current === 0 && rect.top <= winHeight * 0.42) {
+    if (current === 0 && relativeTop <= heroHeight * 0.42) {
       setActive(1)
-    } else if (current === 1 && rect.top >= winHeight * 0.62) {
+    } else if (current === 1 && relativeTop >= heroHeight * 0.62) {
       setActive(0)
     }
   }, [])
@@ -132,8 +132,10 @@ export default function Navbar() {
     }
   }
 
-  // Outside tap/click to collapse on mobile
+  // Outside tap to collapse on mobile ONLY if currently open (zero touch overhead while scrolling)
   useEffect(() => {
+    if (!expanded) return
+
     const handleOutsideTouch = (e) => {
       if (islandRef.current && !islandRef.current.contains(e.target)) {
         handleLeave()
@@ -146,7 +148,7 @@ export default function Navbar() {
       window.removeEventListener('touchstart', handleOutsideTouch)
       window.removeEventListener('click', handleOutsideTouch)
     }
-  }, [])
+  }, [expanded, handleLeave])
 
   const handleScroll = (e, href, index) => {
     e.preventDefault()

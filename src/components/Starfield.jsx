@@ -11,7 +11,7 @@ export default function Starfield() {
     let animationFrameId
     let width = 0
     let height = 0
-    let dpr = window.devicePixelRatio || 1
+    let dpr = Math.min(window.devicePixelRatio || 1, 2)
 
     let stars = []
 
@@ -51,7 +51,7 @@ export default function Starfield() {
 
     const handleResize = () => {
       if (!canvas) return
-      dpr = window.devicePixelRatio || 1
+      dpr = Math.min(window.devicePixelRatio || 1, 2)
       width = window.innerWidth
       height = window.innerHeight
       canvas.width = width * dpr
@@ -105,7 +105,7 @@ export default function Starfield() {
 
         // Pure crisp diamond monochrome stars
         ctx.fillStyle = `rgba(255, 255, 255, ${alpha})`
-        ctx.shadowBlur = star.depth > 0.6 ? 3 * dpr : 0
+        ctx.shadowBlur = width < 600 ? 0 : (star.depth > 0.6 ? 3 * dpr : 0)
         ctx.shadowColor = 'rgba(255, 255, 255, 0.6)'
 
         ctx.fill()

@@ -328,6 +328,9 @@
     top: 12px;
     width: 136px;
     height: 36px;
+    background: rgba(10, 10, 10, 0.92);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
     -webkit-tap-highlight-color: transparent;
   }
 

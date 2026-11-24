@@ -22,7 +22,6 @@
   padding: clamp(32px, 5vh, 60px) var(--hero-left-gutter) clamp(48px, 7.5vh, 88px);
   user-select: none;
   isolation: isolate;
-  contain: layout paint;
 }
 
 /* ─── 3 Diagonal Parallel Lines (Edges Covered + 300px Center Band) ─── */
@@ -33,16 +32,12 @@
   height: 100%;
   pointer-events: none;
   z-index: 1;
-  will-change: transform;
-  transform: translateZ(0);
-  contain: strict;
 }
 
 .hero-diagonal-line {
   stroke: #ffffff;
   vector-effect: non-scaling-stroke;
-  transform: translateZ(0);
-  backface-visibility: hidden;
+  will-change: stroke-width;
 }
 
 .hero-line-center {
