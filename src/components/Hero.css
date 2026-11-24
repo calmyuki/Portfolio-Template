@@ -1,0 +1,227 @@
+/* ══════════════════════════════════════════════════════════
+   BRUTALIST EDITORIAL HERO — TRI-BAND MONOCHROME TYPOGRAPHY
+══════════════════════════════════════════════════════════ */
+
+:root {
+  --hero-left-gutter: clamp(28px, 6vw, 84px);
+}
+
+.brutalist-hero {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  min-height: 100vh;
+  background-color: #000000;
+  overflow: hidden;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: clamp(32px, 5vh, 60px) var(--hero-left-gutter) clamp(48px, 7.5vh, 88px);
+  user-select: none;
+}
+
+/* ─── 3 Diagonal Parallel Lines (Edges Covered + 300px Center Band) ─── */
+.hero-diagonal-svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.hero-diagonal-line {
+  stroke: #ffffff;
+  vector-effect: non-scaling-stroke;
+}
+
+.hero-line-center {
+  stroke-width: 300px;
+  animation: lineBreatheCenter 4.8s ease-in-out infinite;
+}
+
+.hero-line-edge {
+  stroke-width: 210px;
+  animation: lineBreatheEdge 4.8s ease-in-out infinite;
+}
+
+@keyframes lineBreatheCenter {
+  0%, 100% {
+    stroke-width: 285px;
+  }
+  50% {
+    stroke-width: 335px;
+  }
+}
+
+@keyframes lineBreatheEdge {
+  0%, 100% {
+    stroke-width: 195px;
+  }
+  50% {
+    stroke-width: 240px;
+  }
+}
+
+/* ─── Foreground Content Stage: Crisp, High Legibility ─── */
+.hero-content-stage {
+  position: relative;
+  z-index: 5;
+  width: 100%;
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-end;
+  text-align: left;
+  mix-blend-mode: difference;
+}
+
+/* Small Introductory Label with Breathing Room */
+.hero-intro-wrapper {
+  overflow: hidden;
+  margin-bottom: clamp(18px, 2.8vh, 32px);
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  width: 100%;
+}
+
+.hero-intro-text {
+  display: block;
+  text-align: left;
+  font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: clamp(0.72rem, 0.85vw, 0.88rem);
+  font-weight: 600;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: #a0a0a0;
+  line-height: 1.2;
+}
+
+/* Oversized Headline (Anton Heavy Condensed Display) */
+.hero-massive-headline {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+  font-family: 'Anton', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: clamp(3.8rem, 11.6vw, 11.2rem);
+  font-weight: 400;
+  line-height: 0.94;
+  letter-spacing: -0.015em;
+  text-transform: uppercase;
+  color: #ffffff;
+  user-select: none;
+}
+
+.hero-headline-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  text-align: left;
+  width: 100%;
+  overflow: hidden;
+  line-height: 0.94;
+  padding-bottom: 0.05em;
+}
+
+.hero-headline-text {
+  display: block;
+  text-align: left;
+  line-height: 0.94;
+  margin: 0;
+  padding: 0;
+}
+
+/* ─── Responsive Refinement ─── */
+@media (max-width: 900px) {
+  :root {
+    --hero-left-gutter: clamp(24px, 5vw, 48px);
+  }
+
+  .brutalist-hero {
+    padding: clamp(28px, 4.5vh, 48px) var(--hero-left-gutter) clamp(38px, 6vh, 64px);
+  }
+
+  .hero-massive-headline {
+    font-size: clamp(3.4rem, 12.8vw, 7.2rem);
+    line-height: 0.94;
+  }
+
+  .hero-line-center {
+    stroke-width: 230px;
+    animation-name: lineBreatheCenterTablet;
+  }
+
+  .hero-line-edge {
+    stroke-width: 170px;
+    animation-name: lineBreatheEdgeTablet;
+  }
+
+  @keyframes lineBreatheCenterTablet {
+    0%, 100% { stroke-width: 215px; }
+    50% { stroke-width: 255px; }
+  }
+
+  @keyframes lineBreatheEdgeTablet {
+    0%, 100% { stroke-width: 155px; }
+    50% { stroke-width: 190px; }
+  }
+}
+
+@media (max-width: 600px) {
+  :root {
+    --hero-left-gutter: 22px;
+  }
+
+  .brutalist-hero {
+    padding: 26px var(--hero-left-gutter) 40px;
+  }
+
+  .hero-intro-wrapper {
+    margin-bottom: 14px;
+  }
+
+  .hero-intro-text {
+    font-size: 0.7rem;
+    letter-spacing: 0.18em;
+  }
+
+  .hero-massive-headline {
+    font-size: clamp(2.9rem, 12vw, 4.4rem);
+    line-height: 0.94;
+    letter-spacing: -0.01em;
+  }
+
+  .hero-line-center {
+    stroke-width: 190px;
+    animation-name: lineBreatheCenterMobile;
+  }
+
+  .hero-line-edge {
+    stroke-width: 140px;
+    animation-name: lineBreatheEdgeMobile;
+  }
+
+  @keyframes lineBreatheCenterMobile {
+    0%, 100% { stroke-width: 175px; }
+    50% { stroke-width: 210px; }
+  }
+
+  @keyframes lineBreatheEdgeMobile {
+    0%, 100% { stroke-width: 125px; }
+    50% { stroke-width: 155px; }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-line-center,
+  .hero-line-edge {
+    animation: none;
+  }
+}

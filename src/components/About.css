@@ -1,0 +1,304 @@
+/* About Me Section Layout — Pure Monochrome */
+.about-section {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 60px 6vw;
+  background-color: #000000;
+  overflow: hidden;
+}
+
+/* Container Grid */
+.about-container {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 1320px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  gap: clamp(40px, 6vw, 90px);
+}
+
+/* Left Column Container */
+.about-image-column {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%;
+}
+
+/* 
+ * Image Frame: Master Anchor for Silhouette and Monochrome Studio Lighting
+ */
+.about-image-frame {
+  position: relative;
+  width: 100%;
+  max-width: 480px;
+  aspect-ratio: 768 / 910;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: visible;
+  cursor: pointer;
+}
+
+/* 1. Deep Volumetric Monochrome Wash (steady studio backlight) */
+.about-custom-red-deep {
+  position: absolute;
+  top: 43%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 180%;
+  height: 140%;
+  background: radial-gradient(
+    circle,
+    rgba(255, 255, 255, 0.1) 0%,
+    rgba(255, 255, 255, 0.03) 45%,
+    transparent 72%
+  );
+  border-radius: 50%;
+  filter: blur(85px);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* 2. Atmospheric Studio Monochrome Bloom (steady studio backlight) */
+.about-custom-red-bloom {
+  position: absolute;
+  top: 43%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 135%;
+  height: 115%;
+  background: radial-gradient(
+    ellipse 62% 65% at 50% 50%,
+    rgba(255, 255, 255, 0.22) 0%,
+    rgba(255, 255, 255, 0.12) 30%,
+    rgba(255, 255, 255, 0.04) 55%,
+    transparent 85%
+  );
+  border-radius: 50%;
+  filter: blur(50px);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* 3. Incandescent Monochrome Hotspot directly behind head and nape */
+.about-custom-red-bg {
+  position: absolute;
+  top: 42%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 92%;
+  height: 82%;
+  background: radial-gradient(
+    ellipse 64% 70% at 50% 50%,
+    rgba(255, 255, 255, 0.35) 0%,
+    rgba(255, 255, 255, 0.18) 32%,
+    rgba(255, 255, 255, 0.05) 65%,
+    transparent 92%
+  );
+  border-radius: 50%;
+  filter: blur(25px);
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* 
+ * 4. Human Silhouette Layer:
+ * Completely solid (opacity: 1), zero blinks, zero flickers.
+ * Expands smoothly on hover via transform.
+ */
+.about-human-layer {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 3;
+  transform-origin: center bottom;
+  transition: transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
+  pointer-events: none;
+  opacity: 1;
+}
+
+/* Hover: The human silhouette expands */
+.about-image-frame:hover .about-human-layer {
+  transform: scale(1.08);
+}
+
+/* Silhouette Image */
+.about-image-element {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center bottom;
+  display: block;
+  user-select: none;
+  pointer-events: none;
+  /* Soft bottom dissolve into the dark base */
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    black 0%,
+    black 84%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to bottom,
+    black 0%,
+    black 84%,
+    transparent 100%
+  );
+}
+
+/* 
+ * 5. Pure White Perimeter Glint SVG Overlay
+ */
+.about-person-glint-svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 4;
+  pointer-events: none;
+  overflow: visible;
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    black 0%,
+    black 86%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to bottom,
+    black 0%,
+    black 86%,
+    transparent 100%
+  );
+}
+
+/* Pure Diamond White Glint Stroke */
+.about-white-glint-path {
+  fill: none;
+  stroke: #ffffff;
+  stroke-width: 3.2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  filter: url(#pureWhiteGlintFilter);
+  will-change: stroke-dashoffset, opacity;
+}
+
+/* Pure Diamond White Leading Spark */
+.about-white-glint-spark {
+  fill: #ffffff;
+  stroke: rgba(255, 255, 255, 0.95);
+  stroke-width: 1.5;
+  filter: drop-shadow(0 0 6px #ffffff) drop-shadow(0 0 14px #ffffff) drop-shadow(0 0 24px rgba(255, 255, 255, 0.85));
+  will-change: transform, opacity;
+}
+
+/* Right Column: Minimalist About Content (No boxes, no gradients) */
+.about-content-column {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  z-index: 2;
+}
+
+.about-text-wrapper {
+  max-width: 520px;
+  display: flex;
+  flex-direction: column;
+}
+
+.about-eyebrow {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: #666666;
+  margin-bottom: 1.4rem;
+}
+
+.about-title {
+  margin: 0;
+  padding: 0;
+  font-family: 'Outfit', sans-serif;
+  font-size: clamp(3rem, 5.5vw, 4.4rem);
+  font-weight: 600;
+  line-height: 1.08;
+  letter-spacing: -0.03em;
+  color: #ffffff;
+}
+
+.about-description {
+  margin: 1.6rem 0 0 0;
+  font-family: 'Outfit', sans-serif;
+  font-size: clamp(1.05rem, 1.35vw, 1.2rem);
+  font-weight: 300;
+  line-height: 1.7;
+  color: #999999;
+  max-width: 480px;
+}
+
+.about-meta {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 2.2rem;
+  font-family: 'Space Grotesk', 'Outfit', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 400;
+  letter-spacing: 0.03em;
+  color: #e2e2e2;
+}
+
+.about-meta-divider {
+  color: #555555;
+  user-select: none;
+}
+
+/* Responsive */
+@media (max-width: 960px) {
+  .about-section {
+    justify-content: center;
+    padding: 80px 6vw;
+  }
+
+  .about-container {
+    grid-template-columns: 1fr;
+    justify-items: center;
+    gap: 48px;
+  }
+
+  .about-image-column {
+    justify-content: center;
+  }
+
+  .about-image-frame {
+    max-width: 340px;
+  }
+
+  .about-content-column {
+    display: flex;
+    align-items: center;
+    text-align: center;
+  }
+
+  .about-text-wrapper {
+    align-items: center;
+  }
+
+  .about-meta {
+    justify-content: center;
+  }
+}
