@@ -34,7 +34,7 @@ A minimalist, high-performance personal portfolio built with React 19, Vite, and
 
 ```bash
 # Clone the repository
-git clone https://github.com/alwaysyuki/Portfolio-Template.git "Portfolio Template"
+git clone https://github.com/calmyuki/Portfolio-Template.git "Portfolio Template"
 
 # Navigate into project directory
 cd "Portfolio Template"

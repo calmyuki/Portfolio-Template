@@ -25,7 +25,7 @@ export const PROJECTS = [
     status: 'Stable Release',
     logo: '/projects/nor-logo.png',
     banner: '/projects/nor-banner.png',
-    link: 'https://github.com/alwaysyuki/NOR',
+    link: 'https://github.com/calmyuki/NOR',
     linkLabel: 'Source Code',
     languages: ['Swift', 'SwiftUI', 'AppKit', 'Metal'],
     about:
@@ -42,7 +42,7 @@ export const PROJECTS = [
     status: 'Live on macOS',
     logo: '',
     banner: '',
-    link: 'https://github.com/alwaysyuki/Birthdates',
+    link: 'https://github.com/calmyuki/Birthdates',
     linkLabel: 'Source Code',
     languages: ['Swift', 'SwiftUI', 'CoreData', 'macOS'],
     about:
@@ -59,7 +59,7 @@ export const PROJECTS = [
     status: 'Production',
     logo: '/projects/imprint-logo.png',
     banner: '/projects/imprint-banner.png',
-    link: 'https://github.com/alwaysyuki/Imprint',
+    link: 'https://github.com/calmyuki/Imprint',
     linkLabel: 'Source Code',
     languages: ['Java', 'Fabric API', 'Mixin', 'Gradle'],
     about:

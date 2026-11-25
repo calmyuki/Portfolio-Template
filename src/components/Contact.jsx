@@ -28,7 +28,7 @@ export default function Contact() {
           <div className="contact-social-icons">
             {/* 1. GitHub Logo */}
             <a
-              href="https://github.com/alwaysyuki"
+              href="https://github.com/calmyuki"
               target="_blank"
               rel="noopener noreferrer"
               className="contact-icon-btn"
