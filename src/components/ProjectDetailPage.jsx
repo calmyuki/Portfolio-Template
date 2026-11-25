@@ -16,9 +16,10 @@ export default function ProjectDetailPage() {
   const handleBack = () => {
     navigate('/')
     setTimeout(() => {
-      const el = document.getElementById('projects')
-      if (el) el.scrollIntoView({ behavior: 'smooth' })
-    }, 60)
+      window.dispatchEvent(
+        new CustomEvent('scroll-stage-goto', { detail: { target: 'projects' } })
+      )
+    }, 100)
   }
 
   return (
@@ -56,6 +57,20 @@ export default function ProjectDetailPage() {
               <span className="mag-issue-year">{project.year}</span>
               <h1 className="mag-title">{project.title}</h1>
               <p className="mag-subtitle">{project.subtitle}</p>
+
+              {project.link && (
+                <div className="mag-title-action">
+                  <a
+                    href={project.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mag-action-link"
+                  >
+                    <span>{project.linkLabel || 'Open Project'}</span>
+                    <span className="mag-link-arrow">↗</span>
+                  </a>
+                </div>
+              )}
             </div>
           </div>
         </header>
@@ -95,6 +110,21 @@ export default function ProjectDetailPage() {
               <div className="mag-sidebar-section">
                 <h3 className="mag-sidebar-label">STATUS</h3>
                 <p className="mag-sidebar-val">{project.status}</p>
+              </div>
+            )}
+
+            {project.link && (
+              <div className="mag-sidebar-section">
+                <h3 className="mag-sidebar-label">LINK</h3>
+                <a
+                  href={project.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mag-sidebar-link"
+                >
+                  <span>{project.linkLabel || 'Visit Link'}</span>
+                  <span className="mag-link-arrow">↗</span>
+                </a>
               </div>
             )}
           </aside>

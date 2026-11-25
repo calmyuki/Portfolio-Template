@@ -59,11 +59,11 @@
   min-height: 185px;
 }
 
-/* 5. Websites: Tall 1x2 Vertical Block */
+/* 5. Websites: 1x1 Compact Box */
 .box-websites {
   grid-column: 1 / span 1;
-  grid-row: 3 / span 2;
-  min-height: 380px;
+  grid-row: 3 / span 1;
+  min-height: 185px;
 }
 
 /* 6. Mellow Cafe: Wide 2x1 Horizontal Block */
@@ -73,18 +73,25 @@
   min-height: 185px;
 }
 
-/* 7. Khwabon: Wide 2x1 Horizontal Block */
+/* 7. Vetlo Bot: 1x1 Compact Box with Logo */
+.box-vetlo-bot {
+  grid-column: 4 / span 1;
+  grid-row: 3 / span 1;
+  min-height: 185px;
+}
+
+/* 8. Khwabon: Wide 2x1 Horizontal Block */
 .box-khwabon {
-  grid-column: 2 / span 2;
+  grid-column: 1 / span 2;
   grid-row: 4 / span 1;
   min-height: 185px;
 }
 
-/* 8. Mellow Ai: Tall 1x2 Vertical Block */
+/* 9. Mellow Ai: Wide 2x1 Horizontal Block */
 .box-mellow-ai {
-  grid-column: 4 / span 1;
-  grid-row: 3 / span 2;
-  min-height: 380px;
+  grid-column: 3 / span 2;
+  grid-row: 4 / span 1;
+  min-height: 185px;
 }
 
 /* ── Collage Box Base Style ── */
@@ -103,12 +110,9 @@
   cursor: pointer;
   z-index: 1;
   -webkit-tap-highlight-color: transparent;
-  transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1),
-              box-shadow 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+  transition: box-shadow 0.45s cubic-bezier(0.16, 1, 0.3, 1),
               border-color 0.3s ease,
-              background-color 0.3s ease,
-              opacity 0.35s ease,
-              filter 0.35s ease;
+              background-color 0.3s ease;
   will-change: transform, box-shadow;
 }
 
@@ -122,6 +126,10 @@
 
   .collage-box:hover,
   .collage-box.is-hovered {
+    transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+                box-shadow 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+                border-color 0.3s ease,
+                background-color 0.3s ease;
     transform: scale(1.08) translateY(-6px);
     z-index: 50;
     background-color: #141418;
@@ -289,7 +297,61 @@
   text-shadow: 0 2px 14px rgba(0, 0, 0, 0.95), 0 0 24px rgba(255, 255, 255, 0.7);
 }
 
+/* ── Box Content for Logo Boxes (Vetlo Bot) ── */
+.box-content-logo {
+  position: relative;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  width: 100%;
+  height: 100%;
+  padding: 18px 14px;
+  gap: 10px;
+  box-sizing: border-box;
+}
 
+.box-logo-badge-wrap {
+  width: 56px;
+  height: 56px;
+  border-radius: 14px;
+  overflow: hidden;
+  background-color: rgba(255, 255, 255, 0.05);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s ease;
+}
+
+.box-logo-badge {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+.box-content-logo .box-title {
+  font-size: clamp(1.1rem, 1.8vw, 1.4rem);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  color: #ffffff;
+  margin: 0;
+  text-transform: uppercase;
+  transition: all 0.25s ease;
+}
+
+.collage-box:hover .box-logo-badge-wrap {
+  transform: scale(1.08);
+  box-shadow: 0 0 24px rgba(255, 255, 255, 0.35);
+}
+
+.collage-box:hover .box-content-logo .box-title {
+  color: #ffffff;
+  text-shadow: 0 0 20px rgba(255, 255, 255, 0.6);
+}
 
 /* ── Border Highlight ── */
 .box-border {
@@ -351,7 +413,7 @@
     min-height: 240px;
   }
 
-  .box-khwabon {
+  .box-vetlo-bot {
     grid-column: 1 / span 1;
     grid-row: auto;
     min-height: 260px;
@@ -361,6 +423,12 @@
     grid-column: 2 / span 1;
     grid-row: auto;
     min-height: 260px;
+  }
+
+  .box-khwabon {
+    grid-column: 1 / span 2;
+    grid-row: auto;
+    min-height: 240px;
   }
 }
 
@@ -382,6 +450,7 @@
     grid-column: 1 / span 2;
     grid-row: auto;
     min-height: 185px;
+    order: 1;
   }
 
   /* 2. Nor: 1-column left */
@@ -389,6 +458,7 @@
     grid-column: 1 / span 1;
     grid-row: auto;
     min-height: 155px;
+    order: 2;
   }
 
   /* 3. Birthdates: 1-column right (Text box) */
@@ -396,6 +466,7 @@
     grid-column: 2 / span 1;
     grid-row: auto;
     min-height: 155px;
+    order: 3;
   }
 
   /* 4. Imprint: 1-column left */
@@ -403,6 +474,7 @@
     grid-column: 1 / span 1;
     grid-row: auto;
     min-height: 155px;
+    order: 4;
   }
 
   /* 5. Websites: 1-column right (Text box) */
@@ -410,6 +482,7 @@
     grid-column: 2 / span 1;
     grid-row: auto;
     min-height: 155px;
+    order: 5;
   }
 
   /* 6. Mellow Cafe: Wide 2-column Banner with Artwork */
@@ -417,20 +490,31 @@
     grid-column: 1 / span 2;
     grid-row: auto;
     min-height: 145px;
+    order: 6;
   }
 
-  /* 7. Khwabon: Wide 2-column Banner with Artwork */
+  /* 7. Vetlo Bot: 1-column left (Logo & Name) */
+  .box-vetlo-bot {
+    grid-column: 1 / span 1;
+    grid-row: auto;
+    min-height: 155px;
+    order: 7;
+  }
+
+  /* 8. Mellow Ai: 1-column right (Typography Box) */
+  .box-mellow-ai {
+    grid-column: 2 / span 1;
+    grid-row: auto;
+    min-height: 155px;
+    order: 8;
+  }
+
+  /* 9. Khwabon: Wide 2-column Foundation Banner with Artwork */
   .box-khwabon {
     grid-column: 1 / span 2;
     grid-row: auto;
-    min-height: 145px;
-  }
-
-  /* 8. Mellow Ai: Wide 2-column Typography Box */
-  .box-mellow-ai {
-    grid-column: 1 / span 2;
-    grid-row: auto;
-    min-height: 125px;
+    min-height: 150px;
+    order: 9;
   }
 
   .box-content-text-only {
@@ -440,6 +524,20 @@
   .box-content-text-only .box-title {
     font-size: clamp(1.15rem, 4.2vw, 1.45rem);
     letter-spacing: -0.02em;
+  }
+
+  .box-content-logo {
+    padding: 14px 10px;
+    gap: 8px;
+  }
+
+  .box-content-logo .box-logo-badge-wrap {
+    width: 46px;
+    height: 46px;
+  }
+
+  .box-content-logo .box-title {
+    font-size: clamp(0.95rem, 3.8vw, 1.25rem);
   }
 
   .box-content-overlay {

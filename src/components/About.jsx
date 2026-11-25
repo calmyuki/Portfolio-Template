@@ -1,4 +1,4 @@
-import { useRef, useCallback } from 'react'
+import { useRef, useCallback, useEffect } from 'react'
 import gsap from 'gsap'
 import { useGSAP } from '@gsap/react'
 import aboutPng from '@/assets/about-silhouette.png'
@@ -72,6 +72,17 @@ export default function About() {
     },
     { scope: aboutRef }
   )
+
+  // Listen for ScrollStage glint sweep event when user zooms into About section
+  useEffect(() => {
+    const handleGlint = () => {
+      if (glintTimelineRef.current) {
+        glintTimelineRef.current.restart()
+      }
+    }
+    window.addEventListener('trigger-about-glint', handleGlint)
+    return () => window.removeEventListener('trigger-about-glint', handleGlint)
+  }, [])
 
   const handleMouseEnter = useCallback(() => {
     if (glintTimelineRef.current) {

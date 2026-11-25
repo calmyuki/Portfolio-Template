@@ -2,20 +2,12 @@ import { useState, lazy, Suspense } from 'react'
 import { Routes, Route } from 'react-router-dom'
 import LoadingScreen from '@/components/LoadingScreen'
 import Navbar from '@/components/Navbar'
-import Hero from '@/components/Hero'
-import About from '@/components/About'
-import ProjectsSection from '@/components/ProjectsSection'
+import ScrollStage from '@/components/ScrollStage'
 
 const ProjectDetailPage = lazy(() => import('@/components/ProjectDetailPage'))
 
 function HomePage() {
-  return (
-    <>
-      <Hero />
-      <About />
-      <ProjectsSection />
-    </>
-  )
+  return <ScrollStage />
 }
 
 export default function App() {

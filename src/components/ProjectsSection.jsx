@@ -40,13 +40,26 @@ export default function ProjectsSection() {
                   </div>
                 )}
 
-                {/* Names written in text-only boxes (Websites, Mellow Ai, Birthdates) or overlay boxes (Khwabon, Mellow Cafe) */}
+                {/* Names written in text-only boxes (Websites, Mellow Ai, Birthdates), logo box (Vetlo Bot), or overlay boxes (Khwabon, Mellow Cafe) */}
                 {(!project.banner || project.id === 'khwabon' || project.id === 'mellow-cafe') && (
                   <div
                     className={`box-content ${
-                      !project.banner ? 'box-content-text-only' : 'box-content-overlay'
+                      !project.banner
+                        ? project.logo
+                          ? 'box-content-logo'
+                          : 'box-content-text-only'
+                        : 'box-content-overlay'
                     }`}
                   >
+                    {!project.banner && project.logo && (
+                      <div className="box-logo-badge-wrap">
+                        <img
+                          src={project.logo}
+                          alt={`${project.title} logo`}
+                          className="box-logo-badge"
+                        />
+                      </div>
+                    )}
                     <h3 className="box-title">{project.title}</h3>
                   </div>
                 )}

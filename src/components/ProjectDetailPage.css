@@ -115,6 +115,47 @@
   font-weight: 400;
 }
 
+/* ── Action Link Button (Header) ── */
+.mag-title-action {
+  margin-top: 14px;
+}
+
+.mag-action-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 22px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  background-color: rgba(255, 255, 255, 0.05);
+  color: #ffffff;
+  font-family: inherit;
+  font-size: 0.94rem;
+  font-weight: 500;
+  text-decoration: none;
+  letter-spacing: 0.02em;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  width: fit-content;
+}
+
+.mag-action-link:hover {
+  background-color: #ffffff;
+  color: #000000;
+  border-color: #ffffff;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px rgba(255, 255, 255, 0.16);
+}
+
+.mag-link-arrow {
+  font-size: 1.05rem;
+  transition: transform 0.25s ease;
+  line-height: 1;
+}
+
+.mag-action-link:hover .mag-link-arrow {
+  transform: translate(2px, -2px);
+}
+
 
 
 /* ── Editorial Body Grid: Main Copy & Sidebar ── */
@@ -201,6 +242,30 @@
   color: rgba(255, 255, 255, 0.8);
   margin: 0;
   line-height: 1.5;
+}
+
+/* ── Sidebar Link ── */
+.mag-sidebar-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: #ffffff;
+  text-decoration: none;
+  font-size: 1.08rem;
+  font-weight: 500;
+  opacity: 0.9;
+  transition: all 0.2s ease;
+  width: fit-content;
+}
+
+.mag-sidebar-link:hover {
+  opacity: 1;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.mag-sidebar-link:hover .mag-link-arrow {
+  transform: translate(2px, -2px);
 }
 
 /* ── Responsive Queries ── */
