@@ -1,0 +1,364 @@
+/* ─── Projects Section ─── */
+.projects-section {
+  width: 100%;
+  min-height: 100vh;
+  background-color: #000000;
+  color: #ffffff;
+  position: relative;
+  padding: 80px 24px 120px;
+  box-sizing: border-box;
+}
+
+.projects-container {
+  max-width: 1340px;
+  margin: 0 auto;
+  position: relative;
+}
+
+/* ─── Connected Collage Grid ─── */
+.connected-collage {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-auto-rows: minmax(180px, auto);
+  gap: 6px;
+  background-color: rgba(255, 255, 255, 0.04);
+  padding: 6px;
+  border-radius: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  position: relative;
+  overflow: visible;
+}
+
+/* ── Different Shaped Boxes (Puzzle Matrix) ── */
+
+/* 1. Mythos Core: Large 2x2 Anchor Block */
+.box-mythos-core {
+  grid-column: 1 / span 2;
+  grid-row: 1 / span 2;
+  min-height: 380px;
+}
+
+/* 2. Nor: Tall 1x2 Vertical Block */
+.box-nor {
+  grid-column: 3 / span 1;
+  grid-row: 1 / span 2;
+  min-height: 380px;
+}
+
+/* 3. Birthdates: 1x1 Compact Box */
+.box-birthdates {
+  grid-column: 4 / span 1;
+  grid-row: 1 / span 1;
+  min-height: 185px;
+}
+
+/* 4. Imprint: 1x1 Compact Box */
+.box-imprint {
+  grid-column: 4 / span 1;
+  grid-row: 2 / span 1;
+  min-height: 185px;
+}
+
+/* 5. Websites: Tall 1x2 Vertical Block */
+.box-websites {
+  grid-column: 1 / span 1;
+  grid-row: 3 / span 2;
+  min-height: 380px;
+}
+
+/* 6. Mellow Cafe: Wide 2x1 Horizontal Block */
+.box-mellow-cafe {
+  grid-column: 2 / span 2;
+  grid-row: 3 / span 1;
+  min-height: 185px;
+}
+
+/* 7. Khwabon: Wide 2x1 Horizontal Block */
+.box-khwabon {
+  grid-column: 2 / span 2;
+  grid-row: 4 / span 1;
+  min-height: 185px;
+}
+
+/* 8. Mellow Ai: Tall 1x2 Vertical Block */
+.box-mellow-ai {
+  grid-column: 4 / span 1;
+  grid-row: 3 / span 2;
+  min-height: 380px;
+}
+
+/* ── Sibling Dimming on Hover ── */
+.connected-collage.has-hovered .collage-box:not(.is-hovered) {
+  opacity: 0.45;
+  filter: brightness(0.75);
+  transform: scale(0.985);
+}
+
+/* ── Collage Box Base Style ── */
+.collage-box {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 32px 28px;
+  background-color: #0b0c11;
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  text-decoration: none;
+  color: #ffffff;
+  overflow: hidden;
+  cursor: pointer;
+  z-index: 1;
+  transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.3s ease,
+              background-color 0.3s ease,
+              opacity 0.35s ease,
+              filter 0.35s ease;
+  will-change: transform, box-shadow;
+}
+
+/* ── HOVER STATE: MAKE IT BIG (Pure Monochrome Black & White) ── */
+.collage-box:hover,
+.collage-box.is-hovered {
+  transform: scale(1.08) translateY(-6px);
+  z-index: 50;
+  background-color: #141418;
+  border-color: rgba(255, 255, 255, 0.8);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.95),
+              0 0 45px rgba(255, 255, 255, 0.16),
+              inset 0 0 24px rgba(255, 255, 255, 0.05);
+}
+
+/* ── Ambient Radial Glow (Soft White Bloom) ── */
+.box-ambient-glow {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  opacity: 0;
+  background: radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.08) 0%, transparent 70%);
+  transition: opacity 0.4s ease;
+  z-index: 0;
+}
+
+.collage-box:hover .box-ambient-glow,
+.collage-box.is-hovered .box-ambient-glow {
+  opacity: 1;
+}
+
+/* ── Real Project Media Background ── */
+.box-media {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.box-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  filter: brightness(0.92) contrast(1.02);
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), filter 0.4s ease;
+  will-change: transform;
+}
+
+.collage-box:hover .box-image,
+.collage-box.is-hovered .box-image {
+  transform: scale(1.05);
+  filter: brightness(1) contrast(1.05);
+}
+
+/* ── Overlay Dim Scrim for Khwabon & Mellow Cafe ── */
+.box-overlay-dim {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0.1) 0%,
+    rgba(0, 0, 0, 0.35) 45%,
+    rgba(0, 0, 0, 0.78) 100%
+  );
+  pointer-events: none;
+  z-index: 2;
+  transition: opacity 0.35s ease;
+}
+
+.collage-box:hover .box-overlay-dim {
+  opacity: 0.85;
+}
+
+/* ── Box Content for Text-Only Boxes (Websites, Mellow Ai & Birthdates) ── */
+.box-content-text-only {
+  position: relative;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  width: 100%;
+  height: 100%;
+  padding: 24px;
+  box-sizing: border-box;
+}
+
+.box-content-text-only .box-title {
+  font-size: clamp(1.4rem, 2.2vw, 2rem);
+  font-weight: 900;
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+  color: #ffffff;
+  margin: 0;
+  text-transform: uppercase;
+  transition: all 0.25s ease;
+}
+
+.collage-box:hover .box-content-text-only .box-title {
+  color: #ffffff;
+  text-shadow: 0 0 25px rgba(255, 255, 255, 0.6);
+}
+
+/* ── Box Content for Overlay Boxes (Khwabon & Mellow Cafe) ── */
+.box-content-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 24px 28px;
+  box-sizing: border-box;
+  z-index: 3;
+  display: flex;
+  align-items: flex-end;
+}
+
+.box-content-overlay .box-title {
+  font-size: clamp(1.3rem, 2vw, 1.85rem);
+  font-weight: 900;
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+  color: #ffffff;
+  margin: 0;
+  text-transform: uppercase;
+  text-shadow: 0 2px 14px rgba(0, 0, 0, 0.95), 0 0 24px rgba(0, 0, 0, 0.85);
+  transition: all 0.25s ease;
+}
+
+.collage-box:hover .box-content-overlay .box-title {
+  color: #ffffff;
+  text-shadow: 0 2px 14px rgba(0, 0, 0, 0.95), 0 0 24px rgba(255, 255, 255, 0.7);
+}
+
+
+
+/* ── Border Highlight ── */
+.box-border {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 16px;
+  border: 1px solid transparent;
+  pointer-events: none;
+  z-index: 3;
+  transition: border-color 0.3s ease;
+}
+
+.collage-box:hover .box-border {
+  border-color: rgba(255, 255, 255, 0.9);
+}
+
+/* ─── Responsive Adjustments ─── */
+@media (max-width: 1024px) {
+  .connected-collage {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .box-mythos-core {
+    grid-column: 1 / span 2;
+    grid-row: auto;
+    min-height: 280px;
+  }
+
+  .box-nor {
+    grid-column: 1 / span 1;
+    grid-row: auto;
+    min-height: 260px;
+  }
+
+  .box-birthdates {
+    grid-column: 2 / span 1;
+    grid-row: auto;
+    min-height: 260px;
+  }
+
+  .box-imprint {
+    grid-column: 1 / span 1;
+    grid-row: auto;
+    min-height: 260px;
+  }
+
+  .box-websites {
+    grid-column: 2 / span 1;
+    grid-row: auto;
+    min-height: 260px;
+  }
+
+  .box-mellow-cafe {
+    grid-column: 1 / span 2;
+    grid-row: auto;
+    min-height: 240px;
+  }
+
+  .box-khwabon {
+    grid-column: 1 / span 1;
+    grid-row: auto;
+    min-height: 260px;
+  }
+
+  .box-mellow-ai {
+    grid-column: 2 / span 1;
+    grid-row: auto;
+    min-height: 260px;
+  }
+}
+
+@media (max-width: 640px) {
+  .projects-section {
+    padding: 60px 16px 80px;
+  }
+
+  .connected-collage {
+    grid-template-columns: 1fr;
+    gap: 6px;
+    padding: 4px;
+  }
+
+  .box-mythos-core,
+  .box-nor,
+  .box-birthdates,
+  .box-imprint,
+  .box-websites,
+  .box-mellow-ai,
+  .box-khwabon,
+  .box-mellow-cafe {
+    grid-column: 1 / span 1;
+    grid-row: auto;
+    min-height: 200px;
+  }
+
+  .collage-box:hover,
+  .collage-box.is-hovered {
+    transform: scale(1.03) translateY(-3px);
+  }
+}

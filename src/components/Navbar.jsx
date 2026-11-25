@@ -1,11 +1,12 @@
 import { useEffect, useRef, useState, useCallback } from 'react'
-import { Link, useLocation } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import lottie from 'lottie-web'
 import styles from './Navbar.module.css'
 
 const NAV_LINKS = [
-  { id: 0, label: 'Home',  href: '/' },
-  { id: 1, label: 'About', href: '/#about' },
+  { id: 0, label: 'Home',     href: '/' },
+  { id: 1, label: 'About',    href: '/#about' },
+  { id: 2, label: 'Projects', href: '/#projects' },
 ]
 
 export default function Navbar() {
@@ -15,6 +16,7 @@ export default function Navbar() {
   const collapseTimer   = useRef(null)
   const islandRef       = useRef(null)
   const location        = useLocation()
+  const navigate        = useNavigate()
   
   // Set active link based on scroll and current path
   const [active, setActive] = useState(0)
@@ -24,24 +26,40 @@ export default function Navbar() {
     activeRef.current = active
   }, [active])
 
-  // Fast, zero-reflow scroll tracking using compositor-cached scrollY with hysteresis
+  // Fast scroll tracking with hysteresis
   const updateSection = useCallback(() => {
-    const scrollY = window.scrollY || window.pageYOffset || document.documentElement.scrollTop || 0
-    const heroHeight = window.innerHeight || 800
-    const current = activeRef.current
-
-    // Distance of About section from viewport top
-    const relativeTop = heroHeight - scrollY
-
-    // 20% Hysteresis deadband:
-    // To switch from Home (0) -> About (1): top of About must reach upper 42% of viewport
-    // To switch from About (1) -> Home (0): top of About must drop down past 62% of viewport
-    if (current === 0 && relativeTop <= heroHeight * 0.42) {
-      setActive(1)
-    } else if (current === 1 && relativeTop >= heroHeight * 0.62) {
-      setActive(0)
+    if (location.pathname.startsWith('/project/')) {
+      setActive(2) // Projects is active when viewing a project detail page
+      return
     }
-  }, [])
+
+    if (location.pathname !== '/') {
+      return
+    }
+
+    const heroHeight = window.innerHeight || 800
+    const projectsEl = document.getElementById('projects')
+    const aboutEl = document.getElementById('about')
+
+    if (projectsEl) {
+      const projRect = projectsEl.getBoundingClientRect()
+      // If Projects section top reaches upper half of viewport
+      if (projRect.top <= heroHeight * 0.45) {
+        setActive(2)
+        return
+      }
+    }
+
+    if (aboutEl) {
+      const aboutRect = aboutEl.getBoundingClientRect()
+      if (aboutRect.top <= heroHeight * 0.45) {
+        setActive(1)
+        return
+      }
+    }
+
+    setActive(0)
+  }, [location.pathname])
   
   useEffect(() => {
     let rafId = null
@@ -69,7 +87,7 @@ export default function Navbar() {
     }
   }, [updateSection])
 
-  const [expanded, setExpanded]     = useState(false)   // controls pill size
+  const [expanded, setExpanded]       = useState(false)   // controls pill size
   const [showContent, setShowContent] = useState(false) // controls inner visibility
 
   /* ─── Load cat Lottie ─── */
@@ -132,7 +150,7 @@ export default function Navbar() {
     }
   }
 
-  // Outside tap to collapse on mobile ONLY if currently open (zero touch overhead while scrolling)
+  // Outside tap to collapse on mobile ONLY if currently open
   useEffect(() => {
     if (!expanded) return
 
@@ -159,6 +177,22 @@ export default function Navbar() {
     setTimeout(() => {
       handleLeave()
     }, 150)
+
+    if (location.pathname !== '/') {
+      navigate('/')
+      setTimeout(() => {
+        if (href === '/') {
+          window.scrollTo({ top: 0, behavior: 'smooth' })
+        } else if (href.startsWith('/#')) {
+          const targetId = href.replace('/#', '')
+          const element = document.getElementById(targetId)
+          if (element) {
+            element.scrollIntoView({ behavior: 'smooth' })
+          }
+        }
+      }, 100)
+      return
+    }
 
     if (href === '/') {
       window.scrollTo({ top: 0, behavior: 'smooth' })
