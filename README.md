@@ -1,4 +1,4 @@
-# Yuki — Developer Portfolio
+# Portfolio Template
 
 A minimalist, high-performance personal portfolio built with React 19, Vite, and GSAP.
 
@@ -34,10 +34,10 @@ A minimalist, high-performance personal portfolio built with React 19, Vite, and
 
 ```bash
 # Clone the repository
-git clone https://github.com/alwaysyuki/Red-Portfolio.git
+git clone https://github.com/alwaysyuki/Portfolio-Template.git "Portfolio Template"
 
 # Navigate into project directory
-cd Red-Portfolio
+cd "Portfolio Template"
 
 # Install dependencies
 npm install

@@ -1,6 +1,6 @@
 # Technical Architecture & Implementation Details
 
-This document outlines the codebase structure, state flow, rendering architecture, and animation engine powering the **Red-Portfolio** application.
+This document outlines the codebase structure, state flow, rendering architecture, and animation engine powering the **Portfolio Template** application.
 
 ---
 
@@ -18,7 +18,7 @@ This document outlines the codebase structure, state flow, rendering architectur
 ## 2. Directory Layout
 
 ```
-Red-Portfolio/
+Portfolio Template/
 ├── public/                 # Static assets, project media, and vector icons
 │   ├── projects/           # Normalized banners, logos, and previews
 │   ├── cat-hiding.json     # Lottie animation asset for Dynamic Island Navbar
