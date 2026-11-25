@@ -236,3 +236,74 @@
     gap: 36px;
   }
 }
+
+@media (max-width: 640px) {
+  .mag-page {
+    padding: 28px 16px 80px;
+  }
+
+  .mag-top-nav {
+    margin-bottom: 32px;
+  }
+
+  .mag-back-btn {
+    padding: 8px 14px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 999px;
+    font-size: 0.95rem;
+  }
+
+  .mag-header {
+    margin-bottom: 44px;
+  }
+
+  .mag-title-block {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .mag-logo-container {
+    width: 80px;
+    height: 80px;
+    border-radius: 12px;
+  }
+
+  .mag-title {
+    font-size: clamp(2.1rem, 8.5vw, 2.9rem);
+    line-height: 1.05;
+  }
+
+  .mag-subtitle {
+    font-size: 1.05rem;
+    line-height: 1.55;
+    margin-top: 6px;
+  }
+
+  .mag-body-grid {
+    gap: 44px;
+  }
+
+  .mag-lead-paragraph {
+    font-size: 1.08rem;
+    line-height: 1.75;
+  }
+
+  .mag-secondary-paragraph {
+    font-size: 0.98rem;
+    line-height: 1.75;
+  }
+
+  .mag-language-list {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .mag-language-item {
+    font-size: 0.9rem;
+    padding: 6px 14px;
+    background: rgba(255, 255, 255, 0.06);
+    border-radius: 999px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+  }
+}

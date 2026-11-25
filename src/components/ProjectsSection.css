@@ -87,13 +87,6 @@
   min-height: 380px;
 }
 
-/* ── Sibling Dimming on Hover ── */
-.connected-collage.has-hovered .collage-box:not(.is-hovered) {
-  opacity: 0.45;
-  filter: brightness(0.75);
-  transform: scale(0.985);
-}
-
 /* ── Collage Box Base Style ── */
 .collage-box {
   position: relative;
@@ -109,6 +102,7 @@
   overflow: hidden;
   cursor: pointer;
   z-index: 1;
+  -webkit-tap-highlight-color: transparent;
   transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1),
               box-shadow 0.45s cubic-bezier(0.16, 1, 0.3, 1),
               border-color 0.3s ease,
@@ -118,16 +112,53 @@
   will-change: transform, box-shadow;
 }
 
-/* ── HOVER STATE: MAKE IT BIG (Pure Monochrome Black & White) ── */
-.collage-box:hover,
-.collage-box.is-hovered {
-  transform: scale(1.08) translateY(-6px);
-  z-index: 50;
-  background-color: #141418;
-  border-color: rgba(255, 255, 255, 0.8);
-  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.95),
-              0 0 45px rgba(255, 255, 255, 0.16),
-              inset 0 0 24px rgba(255, 255, 255, 0.05);
+/* ── HOVER STATE & SIBLING DIMMING (Desktop / Fine Pointer Only) ── */
+@media (hover: hover) and (pointer: fine) {
+  .connected-collage.has-hovered .collage-box:not(.is-hovered) {
+    opacity: 0.45;
+    filter: brightness(0.75);
+    transform: scale(0.985);
+  }
+
+  .collage-box:hover,
+  .collage-box.is-hovered {
+    transform: scale(1.08) translateY(-6px);
+    z-index: 50;
+    background-color: #141418;
+    border-color: rgba(255, 255, 255, 0.8);
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.95),
+                0 0 45px rgba(255, 255, 255, 0.16),
+                inset 0 0 24px rgba(255, 255, 255, 0.05);
+  }
+
+  .collage-box:hover .box-image,
+  .collage-box.is-hovered .box-image {
+    transform: scale(1.05);
+    filter: brightness(1) contrast(1.05);
+  }
+
+  .collage-box:hover .box-content-text-only .box-title {
+    color: #ffffff;
+    text-shadow: 0 0 25px rgba(255, 255, 255, 0.6);
+  }
+
+  .collage-box:hover .box-content-overlay .box-title {
+    color: #ffffff;
+    text-shadow: 0 2px 14px rgba(0, 0, 0, 0.95), 0 0 24px rgba(255, 255, 255, 0.7);
+  }
+
+  .collage-box:hover .box-border {
+    border-color: rgba(255, 255, 255, 0.9);
+  }
+}
+
+/* ── TOUCH ACTIVE STATE (Mobile / Touch Devices) ── */
+@media (hover: none), (pointer: coarse) {
+  .collage-box:active {
+    transform: scale(0.98);
+    border-color: rgba(255, 255, 255, 0.6);
+    background-color: #16171d;
+  }
 }
 
 /* ── Ambient Radial Glow (Soft White Bloom) ── */
@@ -335,30 +366,87 @@
 
 @media (max-width: 640px) {
   .projects-section {
-    padding: 60px 16px 80px;
+    padding: 48px 12px 76px;
   }
 
   .connected-collage {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, 1fr);
+    grid-auto-rows: minmax(135px, auto);
     gap: 6px;
-    padding: 4px;
+    padding: 6px;
+    border-radius: 18px;
   }
 
-  .box-mythos-core,
-  .box-nor,
-  .box-birthdates,
-  .box-imprint,
-  .box-websites,
-  .box-mellow-ai,
-  .box-khwabon,
-  .box-mellow-cafe {
+  /* 1. Mythos Core: Wide 2-column Hero Banner */
+  .box-mythos-core {
+    grid-column: 1 / span 2;
+    grid-row: auto;
+    min-height: 185px;
+  }
+
+  /* 2. Nor: 1-column left */
+  .box-nor {
     grid-column: 1 / span 1;
     grid-row: auto;
-    min-height: 200px;
+    min-height: 155px;
   }
 
-  .collage-box:hover,
-  .collage-box.is-hovered {
-    transform: scale(1.03) translateY(-3px);
+  /* 3. Birthdates: 1-column right (Text box) */
+  .box-birthdates {
+    grid-column: 2 / span 1;
+    grid-row: auto;
+    min-height: 155px;
+  }
+
+  /* 4. Imprint: 1-column left */
+  .box-imprint {
+    grid-column: 1 / span 1;
+    grid-row: auto;
+    min-height: 155px;
+  }
+
+  /* 5. Websites: 1-column right (Text box) */
+  .box-websites {
+    grid-column: 2 / span 1;
+    grid-row: auto;
+    min-height: 155px;
+  }
+
+  /* 6. Mellow Cafe: Wide 2-column Banner with Artwork */
+  .box-mellow-cafe {
+    grid-column: 1 / span 2;
+    grid-row: auto;
+    min-height: 145px;
+  }
+
+  /* 7. Khwabon: Wide 2-column Banner with Artwork */
+  .box-khwabon {
+    grid-column: 1 / span 2;
+    grid-row: auto;
+    min-height: 145px;
+  }
+
+  /* 8. Mellow Ai: Wide 2-column Typography Box */
+  .box-mellow-ai {
+    grid-column: 1 / span 2;
+    grid-row: auto;
+    min-height: 125px;
+  }
+
+  .box-content-text-only {
+    padding: 16px 12px;
+  }
+
+  .box-content-text-only .box-title {
+    font-size: clamp(1.15rem, 4.2vw, 1.45rem);
+    letter-spacing: -0.02em;
+  }
+
+  .box-content-overlay {
+    padding: 14px 16px;
+  }
+
+  .box-content-overlay .box-title {
+    font-size: clamp(1.05rem, 4.2vw, 1.35rem);
   }
 }
