@@ -1,4 +1,4 @@
-import { useRef, useState, useEffect, useCallback } from 'react'
+import { useRef, useEffect, useCallback } from 'react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { useGSAP } from '@gsap/react'
@@ -18,12 +18,6 @@ export default function ScrollStage() {
   const projectsContentRef = useRef(null)
   const timelineRef = useRef(null)
   const stRef = useRef(null)
-  const progressBarRef = useRef(null)
-
-  // Track active section (0 = Hero, 1 = About, 2 = Projects)
-  const [activeSection, setActiveSection] = useState(0)
-  // Track scroll direction mode ('zoom' | 'right' | 'explore')
-  const [directionMode, setDirectionMode] = useState('zoom')
 
   const glintTriggeredRef = useRef(false)
 
@@ -47,6 +41,12 @@ export default function ScrollStage() {
       targetProgress = 0.35
     } else if (target === 'projects') {
       targetProgress = 0.77
+    } else if (target === 'contact') {
+      const el = document.getElementById('contact')
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth' })
+      }
+      return
     } else {
       targetProgress = 0
     }
@@ -100,12 +100,13 @@ export default function ScrollStage() {
         return
       }
 
-      // Initial visual states
+      // Initial visual states — centered transform origins
       gsap.set(heroEl, {
         scale: 1,
         opacity: 1,
         filter: 'blur(0px)',
         xPercent: 0,
+        transformOrigin: '50% 50%',
       })
 
       gsap.set(aboutEl, {
@@ -113,6 +114,7 @@ export default function ScrollStage() {
         opacity: 0,
         filter: 'blur(12px)',
         xPercent: 0,
+        transformOrigin: '50% 50%',
       })
 
       gsap.set(projectsEl, {
@@ -140,6 +142,8 @@ export default function ScrollStage() {
         return 3400 + extraOverflow
       }
 
+      let lastActiveSection = 0
+
       // Master Scrubbed Timeline
       const tl = gsap.timeline({
         defaults: { ease: 'none' },
@@ -154,39 +158,24 @@ export default function ScrollStage() {
           onUpdate: (self) => {
             const p = self.progress
 
-            // Progress bar update
-            if (progressBarRef.current) {
-              progressBarRef.current.style.transform = `scaleX(${p})`
-            }
-
             // Determine active section and broadcast to Navbar
             let currentSec = 0
-            let mode = 'zoom'
-
             if (p < 0.22) {
               currentSec = 0
-              mode = 'zoom'
             } else if (p >= 0.22 && p < 0.62) {
               currentSec = 1
-              mode = 'right'
             } else {
               currentSec = 2
-              mode = 'explore'
             }
 
-            setActiveSection((prev) => {
-              if (prev !== currentSec) {
-                window.dispatchEvent(
-                  new CustomEvent('stage-active-section', {
-                    detail: { index: currentSec },
-                  })
-                )
-                return currentSec
-              }
-              return prev
-            })
-
-            setDirectionMode(mode)
+            if (lastActiveSection !== currentSec) {
+              lastActiveSection = currentSec
+              window.dispatchEvent(
+                new CustomEvent('stage-active-section', {
+                  detail: { index: currentSec },
+                })
+              )
+            }
 
             // Trigger About silhouette perimeter glint once user enters About section
             if (p >= 0.28 && !glintTriggeredRef.current) {
@@ -218,9 +207,9 @@ export default function ScrollStage() {
       stRef.current = tl.scrollTrigger
 
       /* ─────────────────────────────────────────────────────────────
-         PHASE 1 (0 -> 1.2): ZOOM INSIDE FROM HERO TO ABOUT ME
-         Hero scales up through the camera, dispersing outward with blur.
-         About Me emerges from depth, scaling up to 100% into full clarity.
+         PHASE 1 (0 -> 1.2): ZOOM INSIDE FROM HERO TO ABOUT ME (MIDDLE ZOOM)
+         Hero zooms directly through the screen center into the depths.
+         About Me emerges from dead center, scaling up to full clarity.
          ───────────────────────────────────────────────────────────── */
       tl.addLabel('heroStart', 0)
 
@@ -232,6 +221,7 @@ export default function ScrollStage() {
           filter: 'blur(16px)',
           ease: 'power2.inOut',
           duration: 1.2,
+          transformOrigin: '50% 50%',
         },
         0
       )
@@ -244,9 +234,30 @@ export default function ScrollStage() {
           filter: 'blur(0px)',
           ease: 'power2.inOut',
           duration: 1.2,
+          transformOrigin: '50% 50%',
         },
         0
       )
+
+      // About silhouette and text emergence with dimensional depth
+      const aboutImg = aboutEl.querySelector('.about-image-column')
+      const aboutContent = aboutEl.querySelector('.about-content-column')
+      if (aboutImg) {
+        tl.fromTo(
+          aboutImg,
+          { scale: 0.88, opacity: 0.2 },
+          { scale: 1, opacity: 1, ease: 'power2.out', duration: 1.1 },
+          0.1
+        )
+      }
+      if (aboutContent) {
+        tl.fromTo(
+          aboutContent,
+          { y: 35, opacity: 0 },
+          { y: 0, opacity: 1, ease: 'power2.out', duration: 1.1 },
+          0.15
+        )
+      }
 
       /* ─────────────────────────────────────────────────────────────
          PHASE 2 (1.2 -> 1.7): ABOUT ME DWELL WINDOW
@@ -295,7 +306,7 @@ export default function ScrollStage() {
             x: 0,
             rotateY: 0,
             opacity: 1,
-            stagger: 0.03,
+            stagger: 0.025,
             ease: 'power2.out',
             duration: 1.1,
           },
@@ -333,81 +344,25 @@ export default function ScrollStage() {
 
   return (
     <div ref={rootRef} className="scroll-stage-root">
-      {/* Top Hairline Progress Tracker */}
-      <div
-        ref={progressBarRef}
-        className="stage-progress-bar"
-        style={{ width: '100%', transform: 'scaleX(0)' }}
-      />
-
       {/* Pinned 3D Viewport */}
       <div ref={viewportRef} className="scroll-stage-viewport">
-        {/* Layer 1: Brutalist Hero (Zooms inward on scroll) */}
+        {/* Layer 1: Brutalist Hero (Zooms inward from the middle) */}
         <div ref={heroLayerRef} className="stage-layer stage-layer-hero is-interactive">
           <Hero />
         </div>
 
-        {/* Layer 2: Minimalist About Me (Revealed through zoom, slides left on horizontal scroll) */}
+        {/* Layer 2: Minimalist About Me (Revealed through middle zoom, slides left on horizontal scroll) */}
         <div ref={aboutLayerRef} className="stage-layer stage-layer-about">
           <About />
         </div>
 
-        {/* Layer 3: Projects Section (Enters from right, then allows full exploration) */}
+        {/* Layer 3: Projects Section */}
         <div ref={projectsLayerRef} className="stage-layer stage-layer-projects">
           <div ref={projectsContentRef} className="stage-projects-content">
             <ProjectsSection />
           </div>
         </div>
       </div>
-
-      {/* ── Aesthetic Minimalist Axis Navigator / HUD ── */}
-      <aside className="stage-hud" aria-label="Scroll stage navigation">
-        {/* Active Direction Badge */}
-        <div className="stage-hud-direction">
-          <span className="stage-hud-pulse-dot" />
-          <span
-            className={`stage-hud-arrow direction-${directionMode}`}
-            aria-hidden="true"
-          >
-            {directionMode === 'zoom' ? '↕' : directionMode === 'right' ? '➔' : '✢'}
-          </span>
-          <span className="stage-hud-mode-text">
-            {directionMode === 'zoom'
-              ? 'ZOOM IN'
-              : directionMode === 'right'
-              ? 'SCROLL RIGHT'
-              : 'EXPLORE'}
-          </span>
-        </div>
-
-        {/* Stage Indicators */}
-        <div className="stage-hud-sections">
-          <button
-            type="button"
-            className={`stage-hud-btn ${activeSection === 0 ? 'is-active' : ''}`}
-            onClick={() => scrollToTarget('hero')}
-            aria-label="Jump to Hero section"
-          >
-            01 HERO
-          </button>
-          <button
-            type="button"
-            className={`stage-hud-btn ${activeSection === 1 ? 'is-active' : ''}`}
-            onClick={() => scrollToTarget('about')}
-            aria-label="Jump to About section"
-          >
-            02 ABOUT
-          </button>
-          <button
-            type="button"
-            className={`stage-hud-btn ${activeSection === 2 ? 'is-active' : ''}`}
-            onClick={() => scrollToTarget('projects')}
-            aria-label="Jump to Projects section"
-          >
-            03 PROJECTS
-          </button>
-        </div>
-      </aside>
     </div>
   )
 }

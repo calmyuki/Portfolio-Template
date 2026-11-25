@@ -3,11 +3,17 @@ import { Routes, Route } from 'react-router-dom'
 import LoadingScreen from '@/components/LoadingScreen'
 import Navbar from '@/components/Navbar'
 import ScrollStage from '@/components/ScrollStage'
+import Contact from '@/components/Contact'
 
 const ProjectDetailPage = lazy(() => import('@/components/ProjectDetailPage'))
 
 function HomePage() {
-  return <ScrollStage />
+  return (
+    <>
+      <ScrollStage />
+      <Contact />
+    </>
+  )
 }
 
 export default function App() {

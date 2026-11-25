@@ -26,6 +26,20 @@ export default function Navbar() {
     activeRef.current = active
   }, [active])
 
+  // Listen to ScrollStage active section events for accurate synchronization
+  useEffect(() => {
+    const handleStageActive = (e) => {
+      if (typeof e.detail?.index === 'number' && location.pathname === '/') {
+        setActive(e.detail.index)
+      }
+    }
+
+    window.addEventListener('stage-active-section', handleStageActive)
+    return () => {
+      window.removeEventListener('stage-active-section', handleStageActive)
+    }
+  }, [location.pathname])
+
   // Fast scroll tracking with hysteresis
   const updateSection = useCallback(() => {
     if (location.pathname.startsWith('/project/')) {
@@ -38,8 +52,17 @@ export default function Navbar() {
     }
 
     const heroHeight = window.innerHeight || 800
+    const contactEl = document.getElementById('contact')
     const projectsEl = document.getElementById('projects')
     const aboutEl = document.getElementById('about')
+
+    if (contactEl) {
+      const contactRect = contactEl.getBoundingClientRect()
+      if (contactRect.top <= heroHeight * 0.5) {
+        setActive(3)
+        return
+      }
+    }
 
     if (projectsEl) {
       const projRect = projectsEl.getBoundingClientRect()
@@ -178,31 +201,25 @@ export default function Navbar() {
       handleLeave()
     }, 150)
 
+    const targetId = href === '/' ? 'hero' : href.replace('/#', '')
+
     if (location.pathname !== '/') {
       navigate('/')
       setTimeout(() => {
-        if (href === '/') {
-          window.scrollTo({ top: 0, behavior: 'smooth' })
-        } else if (href.startsWith('/#')) {
-          const targetId = href.replace('/#', '')
-          const element = document.getElementById(targetId)
-          if (element) {
-            element.scrollIntoView({ behavior: 'smooth' })
-          }
-        }
-      }, 100)
+        window.dispatchEvent(
+          new CustomEvent('scroll-stage-goto', {
+            detail: { target: targetId },
+          })
+        )
+      }, 120)
       return
     }
 
-    if (href === '/') {
-      window.scrollTo({ top: 0, behavior: 'smooth' })
-    } else if (href.startsWith('/#')) {
-      const targetId = href.replace('/#', '')
-      const element = document.getElementById(targetId)
-      if (element) {
-        element.scrollIntoView({ behavior: 'smooth' })
-      }
-    }
+    window.dispatchEvent(
+      new CustomEvent('scroll-stage-goto', {
+        detail: { target: targetId },
+      })
+    )
   }
 
   /* Cleanup */
@@ -261,9 +278,9 @@ export default function Navbar() {
           <div className={styles.divider} />
 
           <Link 
-            to="/#about" 
+            to="/#contact" 
             className={styles.cta}
-            onClick={(e) => handleScroll(e, '/#about', 1)}
+            onClick={(e) => handleScroll(e, '/#contact', 3)}
           >
             <span className={styles.ctaText}>Let&apos;s Talk</span>
             <span className={styles.ctaArrow}>↗</span>

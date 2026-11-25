@@ -1,8 +1,7 @@
 /* ══════════════════════════════════════════════════════════
    SCROLL STAGE — MULTI-AXIS CINEMATIC SCROLL EXPERIENCE
-   1. Hero -> About: Camera Zoom Inside / Portal Dive
+   1. Hero -> About: Camera Zoom Inside from Dead Center
    2. About -> Projects: Horizontal Axis Shift (Scroll Right)
-   3. Aesthetic Minimalist HUD & Direction Compass
    ══════════════════════════════════════════════════════════ */
 
 .scroll-stage-root {
@@ -36,14 +35,14 @@
   overflow: hidden;
 }
 
-/* Layer 1: Brutalist Hero */
+/* Layer 1: Brutalist Hero — Zoom from Dead Middle */
 .stage-layer-hero {
   z-index: 10;
-  transform-origin: 50% 65%;
+  transform-origin: 50% 50%;
   pointer-events: auto;
 }
 
-/* Layer 2: About Me Section */
+/* Layer 2: About Me Section — Emerges from Dead Middle */
 .stage-layer-about {
   z-index: 20;
   transform-origin: 50% 50%;
@@ -71,195 +70,12 @@
   min-height: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
+  padding-top: clamp(64px, 8vh, 88px);
+  padding-bottom: 80px;
+  box-sizing: border-box;
   will-change: transform;
-}
-
-/* ─── Aesthetic Axis Navigator / HUD ─── */
-.stage-hud {
-  position: fixed;
-  bottom: clamp(16px, 3vh, 32px);
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 100;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 6px 14px 6px 12px;
-  background-color: rgba(14, 14, 18, 0.72);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: 9999px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.75), 0 0 20px rgba(255, 255, 255, 0.04);
-  user-select: none;
-  pointer-events: auto;
-  transition: opacity 0.35s ease, transform 0.35s ease;
-}
-
-/* Direction Indicator Badge */
-.stage-hud-direction {
-  display: flex;
-  align-items: center;
-  gap: 7px;
-  padding: 4px 10px;
-  background-color: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 9999px;
-  font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
-  font-size: 0.68rem;
-  font-weight: 600;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: #e0e0e0;
-}
-
-.stage-hud-pulse-dot {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background-color: #ff3344;
-  box-shadow: 0 0 8px #ff3344;
-  animation: hudDotBreathe 2s ease-in-out infinite;
-}
-
-@keyframes hudDotBreathe {
-  0%, 100% {
-    transform: scale(0.9);
-    opacity: 0.7;
-  }
-  50% {
-    transform: scale(1.2);
-    opacity: 1;
-    box-shadow: 0 0 12px #ff3344;
-  }
-}
-
-.stage-hud-arrow {
-  display: inline-block;
-  font-size: 0.8rem;
-  line-height: 1;
-  color: #ffffff;
-  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.stage-hud-arrow.direction-zoom {
-  transform: rotate(0deg) scale(1.1);
-  animation: arrowBounceVertical 1.6s ease-in-out infinite;
-}
-
-.stage-hud-arrow.direction-right {
-  transform: rotate(0deg);
-  animation: arrowSlideRight 1.4s ease-in-out infinite;
-}
-
-.stage-hud-arrow.direction-explore {
-  transform: rotate(90deg);
-  animation: arrowBounceVertical 1.6s ease-in-out infinite;
-}
-
-@keyframes arrowSlideRight {
-  0%, 100% {
-    transform: translateX(0);
-  }
-  50% {
-    transform: translateX(3px);
-  }
-}
-
-@keyframes arrowBounceVertical {
-  0%, 100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(2px);
-  }
-}
-
-.stage-hud-mode-text {
-  color: #ffffff;
-  font-weight: 700;
-}
-
-/* Nav Pills inside HUD */
-.stage-hud-sections {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-}
-
-.stage-hud-btn {
-  background: transparent;
-  border: none;
-  padding: 4px 9px;
-  border-radius: 9999px;
-  font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
-  font-size: 0.68rem;
-  font-weight: 500;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: #777777;
-  cursor: pointer;
-  transition: all 0.25s ease;
-  position: relative;
-}
-
-.stage-hud-btn:hover {
-  color: #ffffff;
-  background-color: rgba(255, 255, 255, 0.05);
-}
-
-.stage-hud-btn.is-active {
-  color: #ffffff;
-  font-weight: 600;
-  background-color: rgba(255, 255, 255, 0.12);
-  box-shadow: 0 0 14px rgba(255, 255, 255, 0.08);
-}
-
-/* Top Progress Hairline */
-.stage-progress-bar {
-  position: fixed;
-  top: 0;
-  left: 0;
-  height: 2px;
-  background: linear-gradient(90deg, #ff3344 0%, #ffffff 70%, #ff3344 100%);
-  z-index: 999;
-  box-shadow: 0 0 10px rgba(255, 51, 68, 0.6);
-  pointer-events: none;
-  transform-origin: left center;
-  will-change: transform;
-}
-
-/* ─── Responsive Fine-Tuning ─── */
-@media (max-width: 768px) {
-  .stage-hud {
-    bottom: 16px;
-    padding: 5px 10px 5px 8px;
-    gap: 8px;
-  }
-
-  .stage-hud-direction {
-    padding: 3px 8px;
-    font-size: 0.62rem;
-    letter-spacing: 0.12em;
-  }
-
-  .stage-hud-btn {
-    padding: 3px 6px;
-    font-size: 0.62rem;
-    letter-spacing: 0.08em;
-  }
-}
-
-@media (max-width: 480px) {
-  .stage-hud {
-    max-width: 92vw;
-  }
-  
-  .stage-hud-mode-text {
-    display: none;
-  }
 }
 
 /* Reduced Motion Fallback */
@@ -279,9 +95,5 @@
     transform: none !important;
     filter: none !important;
     pointer-events: auto !important;
-  }
-
-  .stage-hud {
-    display: none;
   }
 }

@@ -1,0 +1,155 @@
+/* ══════════════════════════════════════════════════════════
+   MINIMALIST PURE BLACK & WHITE CONTACT SECTION
+   Normal Document Flow — Zero Pinned Scrub
+   ══════════════════════════════════════════════════════════ */
+
+.contact-section {
+  position: relative;
+  width: 100%;
+  min-height: 70vh;
+  padding: clamp(80px, 12vh, 140px) var(--hero-left-gutter, clamp(28px, 6vw, 84px)) clamp(48px, 6vh, 80px);
+  box-sizing: border-box;
+  background-color: #000000;
+  color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.contact-container {
+  max-width: 1340px;
+  margin: 0 auto;
+  position: relative;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── Minimalist Eyebrow ── */
+.contact-eyebrow {
+  display: block;
+  font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: clamp(0.72rem, 0.88vw, 0.84rem);
+  font-weight: 600;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: #888888;
+  margin-bottom: clamp(18px, 2.8vh, 32px);
+}
+
+/* ── Oversized Brutalist Headline (Pure Monochrome) ── */
+.contact-headline {
+  margin: 0 0 clamp(24px, 3.5vh, 40px) 0;
+  font-family: 'Anton', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: clamp(3.2rem, 9.5vw, 7.8rem);
+  font-weight: 400;
+  line-height: 0.94;
+  letter-spacing: -0.015em;
+  text-transform: uppercase;
+  color: #ffffff;
+  max-width: 1100px;
+}
+
+.contact-desc {
+  font-family: 'Outfit', sans-serif;
+  font-size: clamp(1.05rem, 1.45vw, 1.3rem);
+  font-weight: 300;
+  line-height: 1.65;
+  color: #888888;
+  max-width: 580px;
+  margin: 0 0 clamp(60px, 8vh, 100px) 0;
+}
+
+/* ── Bottom Bar: Copyright at Left, 3 Monochrome Logos at Right ── */
+.contact-bottom-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: clamp(28px, 4vh, 44px);
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  width: 100%;
+  gap: 20px;
+}
+
+/* Left: Copyright */
+.contact-copyright {
+  font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: clamp(0.72rem, 0.82vw, 0.8rem);
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #555555;
+}
+
+/* Right Bottom: Exactly 3 Monochrome Logos */
+.contact-social-icons {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.contact-icon-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background-color: #000000;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  color: #ffffff;
+  text-decoration: none;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  cursor: pointer;
+}
+
+.contact-icon-btn svg {
+  width: 20px;
+  height: 20px;
+  transition: transform 0.25s ease;
+}
+
+.contact-icon-btn:hover {
+  background-color: #ffffff;
+  color: #000000;
+  border-color: #ffffff;
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(255, 255, 255, 0.15);
+}
+
+.contact-icon-btn:hover svg {
+  transform: scale(1.1);
+}
+
+/* ── Responsive ── */
+@media (max-width: 600px) {
+  .contact-section {
+    padding: 60px 20px 40px;
+  }
+
+  .contact-headline {
+    font-size: clamp(2.6rem, 11vw, 3.8rem);
+  }
+
+  .contact-bottom-bar {
+    flex-direction: column-reverse;
+    align-items: flex-start;
+    gap: 24px;
+  }
+
+  .contact-social-icons {
+    width: 100%;
+    justify-content: flex-start;
+  }
+
+  .contact-icon-btn {
+    width: 44px;
+    height: 44px;
+  }
+
+  .contact-icon-btn svg {
+    width: 18px;
+    height: 18px;
+  }
+}

@@ -5,7 +5,7 @@
   background-color: #000000;
   color: #ffffff;
   position: relative;
-  padding: 80px 24px 120px;
+  padding: clamp(28px, 4.5vh, 48px) 24px clamp(48px, 6vh, 80px);
   box-sizing: border-box;
 }
 
@@ -13,6 +13,7 @@
   max-width: 1340px;
   margin: 0 auto;
   position: relative;
+  width: 100%;
 }
 
 /* ─── Connected Collage Grid ─── */
